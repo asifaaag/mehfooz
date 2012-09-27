@@ -53,58 +53,77 @@ void Expression :: boundary(){
 	rectangle( 6, 6, getmaxx()-6, getmaxy()-6);
 }
 
-void Expression :: initArray(char* type, int arrtype, int len){
-	int x1, y1, x2, y2;
+void Expression :: initArray(char* exprtype, int arrloc, int len){
+	int x1, y1, x2, y2, size = 24, yloc = 110;
 	//len = strlen(expr);
 	x1 = XMID;
 	x2 = x1;
 
 	settextstyle( 0, HORIZ_DIR, 1);
 	setcolor(WHITE);
-	y2 = arrtype? YMID-150: YMID+150; //set y-axis according to source or dest type
-	y1 = y2-30;//upper edge for the source array
+	if(arrloc){
+		y2 = YMID-yloc; //set y-axis according to source or dest type
+		y1 = y2-size;//upper edge for the source array
+	}
+	else{
+		y1 = YMID+yloc;
+		y2 = y1+size;
+	}
 
 	//draw internal lines for the array
 	for(int i=0; i <= len; i++){
 		line( x2, y1, x2, y2);
-		x2 = x2+30;
+		x2 = x2+size;
 	}
-	x2 = x2 - 30;
-	
+	x2 = x2 - size;
+
 	//draw the two external lines for the array
 	line( x1, y1, x2, y1);
 	line( x1, y2, x2, y2);
 
+	settextstyle( 0, HORIZ_DIR, 1);
+	setcolor(WHITE);
+	//to display the type of array
+	if(arrloc)
+		outtextxy( x1, y1-12, exprtype);
+	else
+		outtextxy( x1, y2+5, exprtype);
 }
-
+/***************************************************
+** Note: characters are always 7X7 pixel, x1, y1 **
+** denote the left-top corner of a character    **
+*************************************************/
 void Expression :: displayExprArray(char* expr){
-	int x, y;
-	x = XMID+10;
-	y = YMID-162;
+	int x, y, charloc = 24;
+	x = XMID+9;
+	y = YMID-125;
 	char* dump;
 	int len = strlen( expr);
 	settextstyle( 0, HORIZ_DIR, 1);
 	setcolor(WHITE);
+	//outtextxy( x, y+20, "^");
 	for(int i=0; i<len; i++){
 		sprintf(dump,"%c",expr[i]);
 		outtextxy(x, y, dump);
-		x = x+20;
+		x = x+charloc;
 	}
+
 }
 
 char* Expression :: getExpr(char* type){
 	char* expr;
 	int x = XMID;
-	int y = 20;
+	int y = 30;
 	
 	settextstyle( 0, HORIZ_DIR, 1);
 	setcolor(WHITE);
 	sprintf( expr, "Enter the %s expression:", type);
 	outtextxy(x, y, expr);
-	settextstyle( COMPLEX_FONT, HORIZ_DIR, 1);
-	setcolor(WHITE);
-	gotoxy( 38, 3);
-	cin.getline( expr, 20);
+	//settextstyle( COMPLEX_FONT, HORIZ_DIR, 1);
+	//setcolor(WHITE);
+	//gotoxy( 40, 4);
+	//cin.getline( expr, 20);
+	expr = "a+b+c+d+e+f+g\0";
 	return expr;
 }
 
@@ -174,11 +193,12 @@ void main(){
 	eg.initArray( "Infix", SRC, len);
 	eg.displayExprArray(infix);
 	eg.initArray( "Postfix", DST, len);
-	int x=XMID+20;
-	int y=YMID-162;
+	//int x=XMID+20;
+	//int y=YMID-162;
+	//outtextxy( XMID, YMID, "^");
 //	for(int i=0; i<=10; i++){
 //	mg.movDataX2X(10,300,40);
-	mg.movDataY2Y(x,y,380);
+	//mg.movDataY2Y(x,y,380);
 //	mg.movDataX2X(300,10,380);
  //	mg.movDataY2Y(10,380,40);
 //	}
