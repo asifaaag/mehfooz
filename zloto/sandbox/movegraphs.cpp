@@ -41,16 +41,32 @@ class Expression{
 		void displayExpr(int x, int y, char* expr);
 		void initArray( char* type, int arrtype, int len);
 		void displayExprArray(char* expr);
+		void moveCursor( int x, int y);
+		void displayType( char* type);
 		void boundary();
 		void movDataE2E();
 		void movDataE2S();
 		void movDataS2E();
 };
 
+void Expression :: moveCursor( int x, int y){
+	
+}
+
 void Expression :: boundary(){
 	setfillstyle( 0, getmaxcolor());
 	setcolor(YELLOW);
 	rectangle( 6, 6, getmaxx()-6, getmaxy()-6);
+}
+
+void Expression :: displayType( char* type){
+	settextstyle( 0, HORIZ_DIR, 1);
+	setcolor(RED);
+	sprintf( type, "%s..!!", type);
+	outtextxy( XMID+50, YMID-3, type);
+	delay(100);
+	setfillstyle(0, WHITE);
+	//bar( XMID+50, YMID-3, getx()+7 ,gety()+7);
 }
 
 void Expression :: initArray(char* exprtype, int arrloc, int len){
@@ -89,6 +105,7 @@ void Expression :: initArray(char* exprtype, int arrloc, int len){
 	else
 		outtextxy( x1, y2+5, exprtype);
 }
+
 /***************************************************
 ** Note: characters are always 7X7 pixel, x1, y1 **
 ** denote the left-top corner of a character    **
@@ -107,7 +124,6 @@ void Expression :: displayExprArray(char* expr){
 		outtextxy(x, y, dump);
 		x = x+charloc;
 	}
-
 }
 
 char* Expression :: getExpr(char* type){
@@ -193,6 +209,7 @@ void main(){
 	eg.initArray( "Infix", SRC, len);
 	eg.displayExprArray(infix);
 	eg.initArray( "Postfix", DST, len);
+	eg.displayType("Operator");
 	//int x=XMID+20;
 	//int y=YMID-162;
 	//outtextxy( XMID, YMID, "^");
