@@ -1,5 +1,9 @@
 #include<graphics.h>
+
+//to see if the issue linking feature really works..!!
 //some dummy comment this is 
+
+//second dummy comment
 int main()
 {
    int gd = DETECT,gm,left=100,top=100,right=200,bottom=200,x= 350,y=250,radius=50;
