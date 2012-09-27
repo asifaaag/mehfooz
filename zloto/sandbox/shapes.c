@@ -1,5 +1,7 @@
 #include<graphics.h>
 //some dummy comment this is 
+
+//from manoj's system..!!
 int main()
 {
    int gd = DETECT,gm,left=100,top=100,right=200,bottom=200,x= 350,y=250,radius=50;
