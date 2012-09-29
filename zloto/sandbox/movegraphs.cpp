@@ -23,20 +23,30 @@ class MoveGraph{
 		//int Xsrc;
 		//int Xdest;
 		//int Ysrc;
+
 		//int Ydest;
-		
+
 	public:
-		void movDataX2X( int Xsrc, int Xdest, int Y);
-		void movDataY2Y( int X, int Ysrc, int Ydest);
+		void moveDataX2X( int Xsrc, int Xdest, int Y, char* data);
+		void moveDataY2Y( int X, int Ysrc, int Ydest, char* data);
 };
 
-class Expression{
+class Expression : MoveGraph{
 	private:
+		int MIDX ;
+		int MIDY ;
 		int Xsrc;
-		int Xdest;
 		int Ysrc;
+		int Xdest;
 		int Ydest;
+		int Xin;
+		int Yin;
+		int Xout;
+		int Yout;
+
+
 	public:
+		//Expression();
 		char* getExpr(char* type);
 		void displayExpr(int x, int y, char* expr);
 		void initArray( char* type, int arrtype, int len);
@@ -44,13 +54,96 @@ class Expression{
 		void moveCursor( int x, int y);
 		void displayType( char* type);
 		void boundary();
-		void movDataE2E();
-		void movDataE2S();
-		void movDataS2E();
+		void moveDataExpr2Expr( char data);
+		void moveDataExpr2Stack( char data);
+		void moveDataStack2Expr( char data);
+		void initXY();
 };
 
-void Expression :: moveCursor( int x, int y){
+void Expression :: initXY(){
+    MIDX = getmaxx()/2;
+	MIDY = getmaxy()/2;
+	Xsrc = MIDX+9;
+	Ysrc = MIDY-125;
+	Xdest = Xsrc;
+	Ydest = MIDY+118;
+	Xin = MIDX-69;
+	Yin = MIDY+125;
+	Xout = MIDX-89;
+	Yout = Yin;
+}
+
+/*void Expression :: initializeXY(){
+    Xsrc = XMID+9;
+	Ysrc = YMID-125;
+	Xdest = Xsrc;
+	Ydest = YMID+118;
+	Xin = XMID-9;
+	Yin = YMID+125;
+	Xout = XMID-19;
+	Yout = Yin;
+}*/
+void Expression :: moveDataExpr2Expr( char data){
+
+	char* dataStr;
 	
+	//This will hide the character in the source array with a bar, since each character is a 7X7 pixels
+	setfillstyle( 0, getmaxcolor());
+	bar( Xsrc, Ysrc, Xsrc+7, Ysrc+7);
+	
+	sprintf( dataStr, "%c", data);
+
+	moveDataY2Y( Xsrc, Ysrc+27, YMID, dataStr);
+	moveDataX2X( Xsrc, Xdest, YMID, dataStr);
+	moveDataY2Y( Xdest, YMID, Ydest-30, dataStr);
+
+	outtextxy( Xdest, Ydest, dataStr);
+
+	Xsrc += 24;
+	Xdest += 24;
+}
+
+void Expression :: moveDataExpr2Stack( char data){
+
+	char* dataStr;
+	
+	//This will hide the character in the source array with a bar, since each character is a 7X7 pixels
+	setfillstyle( 0, getmaxcolor());
+	bar( Xsrc, Ysrc, Xsrc+7, Ysrc+7);
+	
+	sprintf( dataStr, "%c", data);
+
+	moveDataY2Y( Xsrc, Ysrc+27, YMID, dataStr);
+	moveDataX2X( Xsrc, Xin, YMID, dataStr);
+	moveDataY2Y( Xin, YMID, Yin-30, dataStr);
+
+	outtextxy( Xin, Yin, dataStr);
+
+	Xsrc += 24;
+}
+
+void Expression :: moveDataStack2Expr( char data){
+
+	//Add logic to hide the data in the outbox array with a bar
+	char* dataStr;
+	
+	//This will hide the character in the source array with a bar, since each character is a 7X7 pixels
+	setfillstyle( 0, getmaxcolor());
+	bar( Xout, Yout, Xout+7, Yout+7);
+	
+	sprintf( dataStr, "%c", data);
+	//moveto( Xout, Yout-14);
+	moveDataY2Y( Xout, Yout-30, YMID, dataStr);
+	moveDataX2X( Xout, Xdest, YMID, dataStr);
+	moveDataY2Y( Xdest, YMID, Ydest-30, dataStr);
+
+	outtextxy( Xdest, Ydest, dataStr);
+
+	Xdest += 24;
+}
+
+void Expression :: moveCursor( int x, int y){
+
 }
 
 void Expression :: boundary(){
@@ -60,10 +153,11 @@ void Expression :: boundary(){
 }
 
 void Expression :: displayType( char* type){
+	char *str;
 	settextstyle( 0, HORIZ_DIR, 1);
 	setcolor(RED);
-	sprintf( type, "%s..!!", type);
-	outtextxy( XMID+50, YMID-3, type);
+	sprintf( str, "%s..!!", type);
+	outtextxy( XMID, YMID-100, str);
 	delay(100);
 	setfillstyle(0, WHITE);
 	//bar( XMID+50, YMID-3, getx()+7 ,gety()+7);
@@ -120,8 +214,8 @@ void Expression :: displayExprArray(char* expr){
 	setcolor(WHITE);
 	//outtextxy( x, y+20, "^");
 	for(int i=0; i<len; i++){
-		sprintf(dump,"%c",expr[i]);
-		outtextxy(x, y, dump);
+		sprintf( dump, "%c", expr[i]);
+		outtextxy( x, y, dump);
 		x = x+charloc;
 	}
 }
@@ -143,35 +237,35 @@ char* Expression :: getExpr(char* type){
 	return expr;
 }
 
-void MoveGraph :: movDataX2X( int Xsrc, int Xdest, int Y){
+void MoveGraph :: moveDataX2X( int Xsrc, int Xdest, int Y, char* data){
 	//outtextxy(Xdest,Y,"!");
-	moveto(Xsrc,Y);
-	while(getx()!=Xdest){
-		setfillstyle(0, getmaxcolor());
-		circle(Xsrc+4,Y+3,10);
+	moveto( Xsrc, Y);
+	while( getx()!=Xdest){
+		setfillstyle( 0, getmaxcolor());
+		circle( Xsrc+4, Y+3, 10);
 		///itoa(arr[count],string,10);
-		outtext("/");
-		delay(4);
-		setfillstyle(0, getmaxcolor());
-		bar(getx()-15 ,Y-7 ,getx()+7 ,Y+13);
-		moveto(Xsrc,Y);
+		outtext( data);
+		delay(10);
+		setfillstyle( 0, getmaxcolor());
+		bar( getx()-15, Y-7, getx()+7, Y+13);
+		moveto( Xsrc, Y);
 		Xsrc = Xsrc > Xdest? Xsrc-1 : Xsrc+1;
 	}
 }
 
-void MoveGraph :: movDataY2Y( int X, int Ysrc, int Ydest){
-	outtextxy(X,Ydest,"!");
-	moveto(X,Ysrc);
-	while(gety()!=Ydest){
-		setfillstyle(0, getmaxcolor());
-		circle(X+4,Ysrc+3,10);
+void MoveGraph :: moveDataY2Y( int X, int Ysrc, int Ydest, char* data){
+	//outtextxy(X,Ydest,"!");
+	moveto( X, Ysrc);
+	while( gety()!=Ydest){
+		setfillstyle( 0, getmaxcolor());
+		circle( X+4, Ysrc+3, 10);
 		///itoa(arr[count],string,10);
-		outtext("(");
-		delay(20);
-		setfillstyle(0, getmaxcolor());
+		outtext( data);
+		delay(10);
+		setfillstyle( 0, getmaxcolor());
 		//setfillstyle( 1, BLUE);
-		bar(X-6 ,gety()-8 ,X+14 ,gety()+14);
-		moveto(X,Ysrc);
+		bar( X-6, gety()-8, X+14, gety()+14);
+		moveto( X, Ysrc);
 		Ysrc = Ysrc > Ydest? Ysrc-1 : Ysrc+1;
 	}
 }
@@ -201,6 +295,7 @@ void main(){
 	Expression eg;
 	char* infix;
 	cg.initGraph();
+	eg.initXY();
 	//eg.boundary();
 	setbkcolor(BLUE);
 	infix = eg.getExpr("Infix");
@@ -209,7 +304,11 @@ void main(){
 	eg.initArray( "Infix", SRC, len);
 	eg.displayExprArray(infix);
 	eg.initArray( "Postfix", DST, len);
-	eg.displayType("Operator");
+	//eg.displayType("Operator");
+	eg.moveDataExpr2Expr( 'a');
+	eg.moveDataExpr2Stack( '+');
+	eg.moveDataStack2Expr( '+');
+	eg.moveDataExpr2Expr( 'b');
 	//int x=XMID+20;
 	//int y=YMID-162;
 	//outtextxy( XMID, YMID, "^");
