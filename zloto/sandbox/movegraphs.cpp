@@ -1,12 +1,16 @@
 #include<iostream.h>    //for cin, cout
+#include<stdio.h>
+#include<stdlib.h>      //for itoa()
 #include<conio.h>       //for getche()
 #include<ctype.h>       //for tolower() function
-#include<stdlib.h>      //for itoa()
 #include<GRAPHICS.H>    //to  load graphics driver
 #include<dos.h>         //for delay() function
-#include<stdio.h>
 #include<string.h>
+#include<graph.h>
+#include<stack.h>
+#include<conv.h>
 
+/*
 #define XMID (getmaxx()/2)
 #define YMID (getmaxy()/2)
 #define SRC 1
@@ -51,7 +55,7 @@ class Expression : MoveGraph{
 		void displayExpr(int x, int y, char* expr);
 		void initArray( char* type, int arrtype, int len);
 		void displayExprArray(char* expr);
-		void moveCursor( int x, int y);
+		void moveCursor();
 		void displayType( char* type);
 		void boundary();
 		void moveDataExpr2Expr( char data);
@@ -61,28 +65,16 @@ class Expression : MoveGraph{
 };
 
 void Expression :: initXY(){
-    MIDX = getmaxx()/2;
-	MIDY = getmaxy()/2;
-	Xsrc = MIDX+9;
-	Ysrc = MIDY-125;
-	Xdest = Xsrc;
-	Ydest = MIDY+118;
-	Xin = MIDX-69;
-	Yin = MIDY+125;
-	Xout = MIDX-89;
-	Yout = Yin;
-}
-
-/*void Expression :: initializeXY(){
     Xsrc = XMID+9;
 	Ysrc = YMID-125;
 	Xdest = Xsrc;
 	Ydest = YMID+118;
-	Xin = XMID-9;
+	Xin = XMID-69;
 	Yin = YMID+125;
-	Xout = XMID-19;
+	Xout = XMID-89;
 	Yout = Yin;
-}*/
+}
+
 void Expression :: moveDataExpr2Expr( char data){
 
 	char* dataStr;
@@ -93,7 +85,7 @@ void Expression :: moveDataExpr2Expr( char data){
 	
 	sprintf( dataStr, "%c", data);
 
-	moveDataY2Y( Xsrc, Ysrc+27, YMID, dataStr);
+	moveDataY2Y( Xsrc, Ysrc+37, YMID, dataStr);
 	moveDataX2X( Xsrc, Xdest, YMID, dataStr);
 	moveDataY2Y( Xdest, YMID, Ydest-30, dataStr);
 
@@ -113,7 +105,7 @@ void Expression :: moveDataExpr2Stack( char data){
 	
 	sprintf( dataStr, "%c", data);
 
-	moveDataY2Y( Xsrc, Ysrc+27, YMID, dataStr);
+	moveDataY2Y( Xsrc, Ysrc+37, YMID, dataStr);
 	moveDataX2X( Xsrc, Xin, YMID, dataStr);
 	moveDataY2Y( Xin, YMID, Yin-30, dataStr);
 
@@ -142,8 +134,9 @@ void Expression :: moveDataStack2Expr( char data){
 	Xdest += 24;
 }
 
-void Expression :: moveCursor( int x, int y){
-
+void Expression :: moveCursor(){
+	setcolor(YELLOW);
+	outtextxy( Xsrc, Ysrc+20, "^");
 }
 
 void Expression :: boundary(){
@@ -155,12 +148,15 @@ void Expression :: boundary(){
 void Expression :: displayType( char* type){
 	char *str;
 	settextstyle( 0, HORIZ_DIR, 1);
-	setcolor(RED);
-	sprintf( str, "%s..!!", type);
-	outtextxy( XMID, YMID-100, str);
-	delay(100);
-	setfillstyle(0, WHITE);
-	//bar( XMID+50, YMID-3, getx()+7 ,gety()+7);
+	setcolor( YELLOW);
+	for( int i=0; i<3; i++){
+		sprintf( str, "%s..!!", type);
+		outtextxy( XMID, YMID-70, str);
+		delay(500);
+		setfillstyle( 0, getmaxcolor());
+		bar( XMID, YMID-70, XMID+300 ,YMID-63);
+		delay(500);
+	}
 }
 
 void Expression :: initArray(char* exprtype, int arrloc, int len){
@@ -200,10 +196,10 @@ void Expression :: initArray(char* exprtype, int arrloc, int len){
 		outtextxy( x1, y2+5, exprtype);
 }
 
-/***************************************************
-** Note: characters are always 7X7 pixel, x1, y1 **
-** denote the left-top corner of a character    **
-*************************************************/
+///***************************************************
+//** Note: characters are always 7X7 pixel, x1, y1 **
+//** denote the left-top corner of a character    **
+//*************************************************
 void Expression :: displayExprArray(char* expr){
 	int x, y, charloc = 24;
 	x = XMID+9;
@@ -212,7 +208,7 @@ void Expression :: displayExprArray(char* expr){
 	int len = strlen( expr);
 	settextstyle( 0, HORIZ_DIR, 1);
 	setcolor(WHITE);
-	//outtextxy( x, y+20, "^");
+	
 	for(int i=0; i<len; i++){
 		sprintf( dump, "%c", expr[i]);
 		outtextxy( x, y, dump);
@@ -242,6 +238,7 @@ void MoveGraph :: moveDataX2X( int Xsrc, int Xdest, int Y, char* data){
 	moveto( Xsrc, Y);
 	while( getx()!=Xdest){
 		setfillstyle( 0, getmaxcolor());
+		setcolor( WHITE);
 		circle( Xsrc+4, Y+3, 10);
 		///itoa(arr[count],string,10);
 		outtext( data);
@@ -258,6 +255,7 @@ void MoveGraph :: moveDataY2Y( int X, int Ysrc, int Ydest, char* data){
 	moveto( X, Ysrc);
 	while( gety()!=Ydest){
 		setfillstyle( 0, getmaxcolor());
+		setcolor( WHITE);
 		circle( X+4, Ysrc+3, 10);
 		///itoa(arr[count],string,10);
 		outtext( data);
@@ -287,12 +285,12 @@ void ConfGraph :: closeGraph(){
 	cleardevice();
 	closegraph();
 }
-
+*/
 
 void main(){
 	ConfGraph cg;
 	MoveGraph mg;
-	Expression eg;
+	ExpressionGraph eg;
 	char* infix;
 	cg.initGraph();
 	eg.initXY();
@@ -304,11 +302,19 @@ void main(){
 	eg.initArray( "Infix", SRC, len);
 	eg.displayExprArray(infix);
 	eg.initArray( "Postfix", DST, len);
-	//eg.displayType("Operator");
+	eg.initStackGraph();
+	eg.moveCursor();
+	eg.displayType("Operator");
 	eg.moveDataExpr2Expr( 'a');
 	eg.moveDataExpr2Stack( '+');
-	eg.moveDataStack2Expr( '+');
+	delay( 1000);
+	eg.pushGraph( '+');
 	eg.moveDataExpr2Expr( 'b');
+	eg.popGraph( '+');
+	delay( 1000);
+	eg.moveDataStack2Expr( '+');
+	delay( 1000);
+	//eg.moveDataExpr2Expr( 'b');
 	//int x=XMID+20;
 	//int y=YMID-162;
 	//outtextxy( XMID, YMID, "^");
@@ -318,6 +324,6 @@ void main(){
 //	mg.movDataX2X(300,10,380);
  //	mg.movDataY2Y(10,380,40);
 //	}
-//	cg.closeGraph();*/
+	cg.closeGraph();
 	getch();
 }

@@ -17,26 +17,19 @@
 
 // Multiplication divisor precedence.
 #define MP 2
-
-
 #define DP MP
 
 // Remainder precedence.
 #define REMP 2
-
 #define NONE 9
 
-
-/******************************************
- ** Conversion classes are defined here **
- ****************************************/
-class Expression{
-		public:
-			int getType(char);             /** TYPE OF EXPRESSION GENERATOR **/
-			int getPrec(char);             /** PRECEDENCE CHECKER FUNCTION **/
+class Expression : public Stack, public ExpressionGraph{
+	public:
+		int getType(char);             /** TYPE OF EXPRESSION GENERATOR **/
+		int getPrec(char);             /** PRECEDENCE CHECKER FUNCTION **/
 };
 
-class Infix : public Stack{
+class Infix : public virtual Expression{
 	protected:
 		char infix[N+1], 
 	
@@ -44,13 +37,19 @@ class Infix : public Stack{
 		void displayInfix();
 };
 
-class Postfix : public Infix{
-	private:
+class Postfix : public virtual Expression{
+	protected:
 		char postfix[N+1];
 		
 	public:
-		void infixtopostfix(void);     /** POSTFIX CONVERSION FUNCTION **/
 		void displayPostfix();
 };
 
+class InfixPostfix : public Infix, public Postfix{
+	
+	public:
+		void infix2postfix();
+		void postfix2infix();
+
+};
 #endif 

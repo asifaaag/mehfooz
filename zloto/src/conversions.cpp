@@ -4,12 +4,22 @@
 #include<string.h>
 #include<ctype.h>
 #include<stdlib.h>
+#include<graphics.h>
+#include<dos.h>
+#include<graph.h>
 #include<stack.h>
 #include<conv.h>
 
-/***********************************************************
+/**========================================================================================**
  ** Member functions of class Expression are defined here **
- **********************************************************/
+ **=======================================================================================**/
+
+/********************************************************************************
+** function:		initGraph()
+** developer:		Asif, asifiqbal.rs@gmail.com
+** description: 	returns precedence of a particular operator/operand
+** notes:			
+*******************************************************************************/
 int Expression :: getPrec(char sym)
 {
     switch(sym)
@@ -31,6 +41,12 @@ int Expression :: getPrec(char sym)
     }
 }
 
+/********************************************************************************
+** function:		getType()
+** developer:		Asif, asifiqbal.rs@gmail.com
+** description: 	returns the type of character withtin an expression
+** notes:			
+*******************************************************************************/
 int Expression :: getType(char sym)
 {
     switch(sym)
@@ -50,44 +66,69 @@ int Expression :: getType(char sym)
     }
 }
 
-/******************************************************
- ** Member functions of class Infix are defined here **
- *****************************************************/
-void Infix :: displayInfix(){
+/**========================================================================================**
+ ** Member functions of class displayInfix are defined here **
+ **=======================================================================================**/
+
+/********************************************************************************
+** function:		displayInfix()
+** developer:		Asif, asifiqbal.rs@gmail.com
+** description: 	
+** notes:			
+*******************************************************************************/
+ void Infix :: displayInfix(){
 	cout << infix;
 }
  
  
- /*******************************************************
+ /**========================================================================================**
  ** Member functions of class Postfix are defined here **
- *******************************************************/
+ **=======================================================================================**/
+
+/********************************************************************************
+** function:		displayPostfix()
+** developer:		Asif, asifiqbal.rs@gmail.com
+** description: 	
+** notes:			
+*******************************************************************************/
 void Postfix :: displayPostfix(){
 	cout << postfix;
 }
 
-void Postfix :: infixtopostfix(void)
+/**========================================================================================**
+ ** Member functions of class InfixPostfix are defined here **
+ **=======================================================================================**/
+/********************************************************************************
+** function:		inifix2postfix()
+** developer:		Asif, asifiqbal.rs@gmail.com
+** description: 	function for conversion from infix to postfix expression
+** notes:			takes care of graphical illustration of the same
+*******************************************************************************/
+void InfixPostfix :: infix2postfix(void)
 {
     int i,p,l,type,prec;
     char next;
-	InfixGraph inG;
-	PostfixGraph poG;
+	//InfixGraph inG;
+	//PostfixGraph poG;
     i=p=0;
-	infix = inG.inputInfixExpr();
-	inG.displayInfixArray();
+	cout <<" Enter infix expression:\n";
+	cin.getline( infix, 20);
+	//infix = inG.inputInfixExpr();
+	//inG.displayInfixArray();
 	
 	l=strlen(infix);
     while(i<l)
     {
-        inG.navigateCursor();
+       // inG.navigateCursor();
 		type=getType(infix[i]);
         switch(type)
         {
         case LP:
-			stG.pushGraph(infix[i]);
+			//stG.pushGraph(infix[i]);
             push(infix[i]);
             break;
         case RP:
-			stG.popGraph();
+			//stG.popGraph();
             while((next=pop())!='(')
                 postfix[p++]=next;
             break;
@@ -108,14 +149,14 @@ void Postfix :: infixtopostfix(void)
     postfix[p]='\0';
 }
 
-
+/*
 void main()
 {
     char ch;
-	Postfix post;
+	InfixPostfix post;
     do
     {        
-        post.infixtopostfix();
+	post.infix2postfix();
         cout <<"\ninfix = ";
 		post.displayInfix();
 		cout <<"\npostfix = ";
@@ -125,4 +166,4 @@ void main()
     }while(ch=='Y' || ch=='y');
 }
 
-
+*/

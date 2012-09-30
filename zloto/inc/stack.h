@@ -1,5 +1,6 @@
 #ifndef __STACK_H
 #define __STACK_H
+
 #define SIZE 10
 #define STACKTOP SIZE-1
 #define STACKBASE -1
