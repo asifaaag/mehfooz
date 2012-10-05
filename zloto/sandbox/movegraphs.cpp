@@ -287,19 +287,23 @@ void ConfGraph :: closeGraph(){
 }
 */
 
+
 void main(){
+	//int len;
 	ConfGraph cg;
+	//ExpressionGraph eg;
 	//MoveGraph mg;
 	InfixPostfix in2post;
 	//char* infix;
 	cg.initGraph();
-	in2post.initXY();
+	//in2post.initXY();
 	//eg.boundary();
-	//setbkcolor(BLUE);
+	setbkcolor(BLUE);
 	in2post.infix2postfix();
-	
-	//eg.initArray( "Infix", SRC, len);
-	//eg.displayExprArray(infix);
+	//infix = in2post.getExpr( "Infix");
+	//len = strlen( infix);
+	//in2post.initArray( "Infix", SRC, len);
+	//in2post.displayExprArray( infix);
 	//eg.initArray( "Postfix", DST, len);
 	//eg.initStackGraph();
 	//eg.moveCursor();
@@ -325,6 +329,7 @@ void main(){
 //	mg.movDataX2X(300,10,380);
  //	mg.movDataY2Y(10,380,40);
 //	}
-	//cg.closeGraph();
-	//getch();
+	getch();
+	cg.closeGraph();
+
 }

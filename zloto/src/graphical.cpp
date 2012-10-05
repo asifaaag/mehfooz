@@ -1,12 +1,14 @@
 #include<iostream.h>    //for cin, cout
 #include<stdio.h>
-#include<conio.h>       //for getche()
-#include<ctype.h>       //for tolower() function
 #include<stdlib.h>      //for itoa()
-#include<GRAPHICS.H>    //to  load graphics driver
+#include<conio.h>       //for getche()
 #include<dos.h>         //for delay() function
+#include<ctype.h>       //for tolower() function
+#include<GRAPHICS.H>    //to  load graphics driver
 #include<string.h>
 #include<graph.h>
+#include<stack.h>
+#include<conv.h>
 
 /**========================================================================================**
  ** Member functions of class ConfGraph are defined here **
@@ -284,10 +286,10 @@ char* ExpressionGraph :: getExpr(char* type){
 	outtextxy(x, y, expr);
 	//settextstyle( COMPLEX_FONT, HORIZ_DIR, 1);
 	//setcolor(WHITE);
-	gotoxy( 40, 4);
+	gotoxy( 42, 4);
 	cin.getline( input, 20);
 	//outtextxy( 10, 20, input);
-	//expr = "a+b+c+d+e+f+g\0";
+	//input = "a+b+c+d+e+f+g\0";
 	return input;
 }
 
@@ -367,6 +369,10 @@ void ExpressionGraph :: moveCursor(){
 	outtextxy( Xsrc, Ysrc+20, "^");
 }
 
+void ExpressionGraph :: late( unsigned long num){
+	for( int i=0; i<num; i++)
+		for( int j=0; j<num; j++);
+}
 /********************************************************************************
 ** function:		displayType()
 ** developer:		Asif, asifiqbal.rs@gmail.com
@@ -380,10 +386,10 @@ void ExpressionGraph :: displayType( char* type){
 	for( int i=0; i<3; i++){
 		sprintf( str, "%s..!!", type);
 		outtextxy( XMID, YMID-70, str);
-		delay(500);
+		delay( 1000);
 		setfillstyle( 0, getmaxcolor());
 		bar( XMID, YMID-70, XMID+300 ,YMID-63);
-		delay(500);
+		delay( 1000);
 	}
 }
 
