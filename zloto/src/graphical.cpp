@@ -150,7 +150,12 @@ void StackGraph :: initStackGraph(){
 	Yin = Yout; 
 }
 
-
+/********************************************************************************
+ ** function:		initStackGraph()
+ ** developer:		Asif, asifiqbal.rs@gmail.com
+ ** description: 	to initialize the stack on the console along with the in and outbox
+ ** notes:			
+ *******************************************************************************/
 void StackGraph :: pushGraph( char data){
 	
 	char* dataStr;
@@ -169,6 +174,12 @@ void StackGraph :: pushGraph( char data){
 	outtextxy( Xstack, Ystack, dataStr);
 }
 
+/********************************************************************************
+ ** function:		initStackGraph()
+ ** developer:		Asif, asifiqbal.rs@gmail.com
+ ** description: 	to initialize the stack on the console along with the in and outbox
+ ** notes:			
+ *******************************************************************************/
 void StackGraph :: popGraph( char data){
 	
 	char* dataStr;
@@ -263,7 +274,7 @@ void ExpressionGraph :: initXY(){
 ** notes:			
 *******************************************************************************/
 char* ExpressionGraph :: getExpr(char* type){
-	char* expr;
+	char* expr, *input;
 	int x = XMID;
 	int y = 30;
 	
@@ -273,10 +284,11 @@ char* ExpressionGraph :: getExpr(char* type){
 	outtextxy(x, y, expr);
 	//settextstyle( COMPLEX_FONT, HORIZ_DIR, 1);
 	//setcolor(WHITE);
-	//gotoxy( 40, 4);
-	//cin.getline( expr, 20);
-	expr = "a+b+c+d+e+f+g\0";
-	return expr;
+	gotoxy( 40, 4);
+	cin.getline( input, 20);
+	//outtextxy( 10, 20, input);
+	//expr = "a+b+c+d+e+f+g\0";
+	return input;
 }
 
 /********************************************************************************

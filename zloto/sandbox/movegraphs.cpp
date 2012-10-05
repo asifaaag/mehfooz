@@ -289,31 +289,32 @@ void ConfGraph :: closeGraph(){
 
 void main(){
 	ConfGraph cg;
-	MoveGraph mg;
-	ExpressionGraph eg;
-	char* infix;
+	//MoveGraph mg;
+	InfixPostfix in2post;
+	//char* infix;
 	cg.initGraph();
-	eg.initXY();
+	in2post.initXY();
 	//eg.boundary();
-	setbkcolor(BLUE);
-	infix = eg.getExpr("Infix");
-	outtextxy( 10, 40, infix);
-	int len = strlen(infix);
-	eg.initArray( "Infix", SRC, len);
-	eg.displayExprArray(infix);
-	eg.initArray( "Postfix", DST, len);
-	eg.initStackGraph();
-	eg.moveCursor();
-	eg.displayType("Operator");
-	eg.moveDataExpr2Expr( 'a');
-	eg.moveDataExpr2Stack( '+');
-	delay( 1000);
-	eg.pushGraph( '+');
-	eg.moveDataExpr2Expr( 'b');
-	eg.popGraph( '+');
-	delay( 1000);
-	eg.moveDataStack2Expr( '+');
-	delay( 1000);
+	//setbkcolor(BLUE);
+	in2post.infix2postfix();
+	
+	//eg.initArray( "Infix", SRC, len);
+	//eg.displayExprArray(infix);
+	//eg.initArray( "Postfix", DST, len);
+	//eg.initStackGraph();
+	//eg.moveCursor();
+	//eg.displayType("Operator");
+	//eg.moveDataExpr2Expr( 'a');
+	//eg.moveDataExpr2Stack( '+');
+	//delay( 1000);
+	//eg.pushGraph( '+');
+	//eg.moveDataExpr2Expr( 'b');
+	//eg.popGraph( '+');
+	//delay( 1000);
+	//eg.moveDataStack2Expr( '+');
+	//delay( 1000);
+	
+	
 	//eg.moveDataExpr2Expr( 'b');
 	//int x=XMID+20;
 	//int y=YMID-162;
@@ -324,6 +325,6 @@ void main(){
 //	mg.movDataX2X(300,10,380);
  //	mg.movDataY2Y(10,380,40);
 //	}
-	cg.closeGraph();
-	getch();
+	//cg.closeGraph();
+	//getch();
 }

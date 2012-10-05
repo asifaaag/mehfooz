@@ -52,16 +52,20 @@ int Expression :: getType(char sym)
     switch(sym)
     {
     case '(':
+		displayType("Left Paranthesis");
         return(LP);
     case ')':
+		displayType("Right Paranthesis");
         return(RP);
     case '+':
     case '-':
     case '*':
     case '/':
     case '%':
+		displayType("Operator");
         return(OPERATOR);
     default :
+		displayType("Operand");
         return(OPERAND);
     }
 }
@@ -99,33 +103,40 @@ void Postfix :: displayPostfix(){
  ** Member functions of class InfixPostfix are defined here **
  **=======================================================================================**/
 /********************************************************************************
-** function:		inifix2postfix()
+** function:   		inifix2postfix()
 ** developer:		Asif, asifiqbal.rs@gmail.com
 ** description: 	function for conversion from infix to postfix expression
 ** notes:			takes care of graphical illustration of the same
 *******************************************************************************/
 void InfixPostfix :: infix2postfix(void)
 {
-    int i,p,l,type,prec;
-    char next;
-	//InfixGraph inG;
-	//PostfixGraph poG;
-    i=p=0;
-	cout <<" Enter infix expression:\n";
-	cin.getline( infix, 20);
-	//infix = inG.inputInfixExpr();
+    int i, p, len, type, prec;
+    char next, *intest;
+	i=p=0;
+
+	//cout <<" Enter infix expression:\n";
+	//cin.getline( infix, 20);
+	intest = getExpr( "Infix");
 	//inG.displayInfixArray();
-	
-	l=strlen(infix);
-    while(i<l)
+	//len = strlen( infix);
+	//outtextxy( 10, 20, intest);
+	//initArray( "Infix", SRC, len);
+	//delay( 1000);
+	//displayExprArray( infix);
+	//initStackGraph();
+	//initArray( "Postfix", DST, len);
+    /*
+	while(i<len)
     {
        // inG.navigateCursor();
-		type=getType(infix[i]);
-        switch(type)
-        {
-        case LP:
-			//stG.pushGraph(infix[i]);
-            push(infix[i]);
+		moveCursor();
+		type = getType( infix[i]);
+	switch( type)
+	{
+	case LP:
+			moveDataExpr2Stack( infix[i]);
+			pushGraph( infix[i]);
+            push( infix[i]);
             break;
         case RP:
 			//stG.popGraph();
@@ -133,20 +144,21 @@ void InfixPostfix :: infix2postfix(void)
                 postfix[p++]=next;
             break;
         case OPERAND:
+			moveDataExpr2Expr( infix[i]);
             postfix[p++]=infix[i];
             break;
         case OPERATOR:
-            prec=getPrec(infix[i]);
-	    while(!isEmpty() && prec <= getPrec(getStackEle()))
-                postfix[p++]=pop();
-            push(infix[i]);
+            prec = getPrec( infix[i]);
+			while( !isEmpty() && prec <= getPrec( getStackEle()))
+                postfix[p++] = pop();
+            push( infix[i]);
             break;
         }
         i++;
     }
-    while(!isEmpty())
+    while( !isEmpty())
         postfix[p++]=pop();
-    postfix[p]='\0';
+    postfix[p]='\0';*/
 }
 
 /*
