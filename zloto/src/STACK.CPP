@@ -21,19 +21,19 @@ int Stack:: isFull(){
 //}
 void Stack :: push( char data){
 	if(isFull()){
-		cout <<"\nStack Overflow\n";
+		//cout <<"\nStack Overflow\n";
 		getch();
 	}else{
 
 		stack[++top] = data;
-		cout<<" top:"<<top;
+		//cout<<" top:"<<top;
 	}
 }
 
 char Stack :: pop(){
 	char data;
 	if(isEmpty()){
-		cout <<" \nStack Empty...!!\n";
+		//cout <<" \nStack Empty...!!\n";
 		getch();//exit(0);
 	}else{
 		data = stack[top--];
@@ -45,7 +45,7 @@ char Stack :: pop(){
 char Stack :: getStackEle(){
 	char data;
 	if(isEmpty()){
-		cout <<" \nStack Empty...!!\n";
+		//cout <<" \nStack Empty...!!\n";
 		getch();//exit(0);
 	}else{
 		data = stack[top];

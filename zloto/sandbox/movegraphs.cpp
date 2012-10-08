@@ -296,6 +296,7 @@ void main(){
 	InfixPostfix in2post;
 	//char* infix;
 	cg.initGraph();
+	cleardevice();
 	//in2post.initXY();
 	//eg.boundary();
 	setbkcolor(BLUE);
@@ -331,5 +332,6 @@ void main(){
 //	}
 	getch();
 	cg.closeGraph();
+	getch();
 
 }

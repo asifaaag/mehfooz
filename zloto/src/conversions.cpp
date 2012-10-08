@@ -4,11 +4,11 @@
 #include<conio.h>       //for getche()
 #include<ctype.h>       //for tolower() function
 #include<GRAPHICS.H>    //to  load graphics driver
-#include<dos.h>         //for delay() function
 #include<string.h>
 #include<graph.h>
 #include<stack.h>
 #include<conv.h>
+#include<dos.h>         //for delay() function
 
 /**========================================================================================**
  ** Member functions of class Expression are defined here **
@@ -49,23 +49,26 @@ int Expression :: getPrec(char sym)
 *******************************************************************************/
 int Expression :: getType(char sym)
 {
-    switch(sym)
+    switch( sym)
     {
 		case '(':
-			displayType("Left Paranthesis");
+			displayType( "Left Paranthesis");
 			return(LP);
+			
 		case ')':
-			displayType("Right Paranthesis");
+			displayType( "Right Paranthesis");
 			return(RP);
+			
 		case '+':
 		case '-':
 		case '*':
 		case '/':
 		case '%':
-			displayType("Operator");
+			displayType( "Operator");
 			return(OPERATOR);
+			
 		default :
-			displayType("Operand");
+			displayType( "Operand");
 			return(OPERAND);
     }
 }
@@ -110,58 +113,68 @@ void Postfix :: displayPostfix(){
 *******************************************************************************/
 void InfixPostfix :: infix2postfix(void)
 {
-	int i, p, len, type, prec;
-	char next;
-	//ExpressionGraph eg;
+	int i, p, len, op, prec;
+	char next, ele = 0;
 	i=p=0;
-	//cout <<" Enter infix expression:\n";
-	//cin.getline( infix, 20);
-	//initXY();
-	infix = getExpr( "Infix");
-	initStackGraph();
+	cleardevice();
+	strcpy( infix, getExpr( "Infix"));
+ 	initStackGraph();
 	initXY();
-	//inG.displayInfixArray();
 	len = strlen( infix);
-	//outtextxy( 10, 20, infix);
 	initArray( "Infix", SRC, len);
-	//delay( 500);
 	displayExprArray( infix);
-	
 	initArray( "Postfix", DST, len);
-    
-	//while(i<len)
-    //{
-        //delay( 1000);
+ 	while( i<len)
+    {
+        delay( 500);
 		moveCursor();
-		//type = getType( infix[i]);
-		//switch( type)
-		//{
-			//case LP:
-				//moveDataExpr2Stack( infix[i]);
-				//pushGraph( infix[i]);
-				//push( infix[i]);
-				//break;
-			// case RP:
-			//	stG.popGraph();
-				// while((next=pop())!='(')
-					// postfix[p++]=next;
-				// break;
-			//case OPERAND:
-				//moveDataExpr2Expr( infix[i]);
-				//postfix[p++]=infix[i];
-				//break;
-			// case OPERATOR:
-				// prec = getPrec( infix[i]);
-				// while( !isEmpty() && prec <= getPrec( getStackEle()))
-					// postfix[p++] = pop();
-				// push( infix[i]);
-				// break;
-        //}
-        // i++;
-    // }
-    // while( !isEmpty())
-        // postfix[p++]=pop();
-    // postfix[p]='\0';
+		op = getType( infix[i]);
+		
+		switch( op)
+ 		{
+			case LP:
+				moveDataExpr2Stack( infix[i]);
+				delay( 500);
+				pushGraph( infix[i]);
+				push( infix[i]);
+				break;
+			case RP:
+				moveDataExpr2Stack( infix[i]);
+				delay( 500);
+				while((next=pop())!='(')
+				postfix[p++]=next;
+				break;
+	 		case OPERAND:
+				moveDataExpr2Expr( infix[i]);
+				delay( 500);
+				postfix[p++]=infix[i];
+				break;
+			case OPERATOR:
+				moveDataExpr2Stack( infix[i]);
+				delay( 500);
+				prec = getPrec( infix[i]);
+				while( !isEmpty() && prec <= getPrec( getStackEle())){
+					//checkPrec();
+					ele = pop();
+					postfix[p++] = ele;
+					popGraph( ele);
+					delay( 500);
+					moveDataStack2Expr( ele);
+				}
+				push( infix[i]);
+				pushGraph( infix[i]);
+				break;
+        }
+	    i++;
+	}
+    while( !isEmpty()){
+        ele = pop();
+		postfix[p++]=ele;
+		popGraph( ele);
+		delay( 500);
+		moveDataStack2Expr( ele);
+	}
+    postfix[p]='\0';
 }
 
 /*

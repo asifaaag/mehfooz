@@ -22,7 +22,7 @@
  *******************************************************************************/
  void ConfGraph :: initGraph(){
 	int driver = DETECT, mode, errorcode;
-	initgraph(&driver, &mode, "c:\\tc\\bgi"); //specify the driver path
+	initgraph(&driver, &mode, "e:\\tc\\bgi"); //specify the driver path
 	errorcode = graphresult();
 
 	if (errorcode != grOk){
@@ -111,7 +111,7 @@ char UtilGraph :: displayMenu(){
 void StackGraph :: initStackGraph(){
 	//Dislplays stack figure
 	int x1 = 30, y1 = 40, x2 = x1+90, y2 = y1, size = 40, r;						//used as y-axis to draw lines within the rectangle
-	char* string;
+	char numstr[20];
 
 	setfillstyle( 0, getmaxcolor());
 	setcolor( WHITE);
@@ -132,8 +132,8 @@ void StackGraph :: initStackGraph(){
 	// This loop Displays stack's boxes Number
 	for( i = 9 ;i>=1 ;i--){
 		moveto(10,r);
-		itoa(i,string,10);
-		outtext(string)  ;
+		itoa(i,numstr,10);
+		outtext(numstr)  ;
 		r+=40;
 	}
 
@@ -160,7 +160,7 @@ void StackGraph :: initStackGraph(){
  *******************************************************************************/
 void StackGraph :: pushGraph( char data){
 	
-	char* dataStr;
+	char dataStr[5];
 	
 	Ystack -= 40;
 	
@@ -184,7 +184,7 @@ void StackGraph :: pushGraph( char data){
  *******************************************************************************/
 void StackGraph :: popGraph( char data){
 	
-	char* dataStr;
+	char dataStr[5];
 	
 	//This will hide the character in the inbox with a bar, since each character is a 7X7 pixels
 	setfillstyle( 0, getmaxcolor());
@@ -199,6 +199,19 @@ void StackGraph :: popGraph( char data){
 
 	Ystack += 40;
 }
+
+void StackGraph :: checkPrec(){
+		
+	setfillstyle( 0, getmaxcolor());
+	setcolor( RED);
+	outtextxy( Xin, Ystack, "?");
+	setlinestyle( DASHED_LINE, 0, 1);
+	setcolor( WHITE);
+	line( Xstack+50, Ystack, Xstack+100, Ystack);
+	line( Xin, Yin-30, Xin, Ystack-10);
+	//displayType( "Precedence");
+}
+
 /**========================================================================================**
  ** Member functions of class MoveGraph are defined here **
  **=======================================================================================**/
@@ -276,7 +289,7 @@ void ExpressionGraph :: initXY(){
 ** notes:			
 *******************************************************************************/
 char* ExpressionGraph :: getExpr(char* type){
-	char* expr, *input;
+	char expr[80], input[20];
 	int x = XMID;
 	int y = 30;
 	
@@ -284,12 +297,9 @@ char* ExpressionGraph :: getExpr(char* type){
 	setcolor(WHITE);
 	sprintf( expr, "Enter the %s expression:", type);
 	outtextxy(x, y, expr);
-	//settextstyle( COMPLEX_FONT, HORIZ_DIR, 1);
-	//setcolor(WHITE);
+	cin.clear();
 	gotoxy( 42, 4);
-	cin.getline( input, 20);
-	//outtextxy( 10, 20, input);
-	//input = "a+b+c+d+e+f+g\0";
+	cin.getline( input, '\n');
 	return input;
 }
 
@@ -346,7 +356,7 @@ void ExpressionGraph :: displayExprArray(char* expr){
 	int x, y, charloc = 24;
 	x = XMID+9;
 	y = YMID-125;
-	char* dump;
+	char dump[20];
 	int len = strlen( expr);
 	settextstyle( 0, HORIZ_DIR, 1);
 	setcolor(WHITE);
@@ -365,32 +375,33 @@ void ExpressionGraph :: displayExprArray(char* expr){
 ** notes:			
 *******************************************************************************/
 void ExpressionGraph :: moveCursor(){
+	setfillstyle( 0, getmaxcolor());
+	bar( Xsrc-24, Ysrc+20, Xsrc-24+7, Ysrc+20+7); 
 	setcolor(YELLOW);
 	outtextxy( Xsrc, Ysrc+20, "^");
 }
 
-void ExpressionGraph :: late( unsigned long num){
-	for( int i=0; i<num; i++)
-		for( int j=0; j<num; j++);
-}
 /********************************************************************************
 ** function:		displayType()
 ** developer:		Asif, asifiqbal.rs@gmail.com
 ** description: 	to display the type of each character in an expression
 ** notes:			blinks thrice
 *******************************************************************************/
-void ExpressionGraph :: displayType( char* type){
-	char *str;
+void ExpressionGraph :: displayType( char* strtype){
+	char typestr[20];
 	settextstyle( 0, HORIZ_DIR, 1);
 	setcolor( YELLOW);
+	sprintf( typestr, "%s...!!", strtype);
+	//sprintf( typestr, "%s", "khudad");
 	for( int i=0; i<3; i++){
-		sprintf( str, "%s..!!", type);
-		outtextxy( XMID, YMID-70, str);
-		delay( 1000);
+		outtextxy( XMID, YMID-70, typestr);
+		delay( 800);
 		setfillstyle( 0, getmaxcolor());
 		bar( XMID, YMID-70, XMID+300 ,YMID-63);
-		delay( 1000);
+		delay( 600);
 	}
+	//strtype = NULL;
+	//typestr = NULL;
 }
 
 /********************************************************************************
@@ -401,7 +412,7 @@ void ExpressionGraph :: displayType( char* type){
 *******************************************************************************/
 void ExpressionGraph :: moveDataExpr2Expr( char data){
 
-	char* dataStr;
+	char dataStr[5];
 	
 	//This will hide the character in the source array with a bar, since each character is a 7X7 pixels
 	setfillstyle( 0, getmaxcolor());
@@ -427,7 +438,7 @@ void ExpressionGraph :: moveDataExpr2Expr( char data){
 *******************************************************************************/
 void ExpressionGraph :: moveDataExpr2Stack( char data){
 
-	char* dataStr;
+	char dataStr[5];
 	
 	//This will hide the character in the source array with a bar, since each character is a 7X7 pixels
 	setfillstyle( 0, getmaxcolor());
@@ -452,7 +463,7 @@ void ExpressionGraph :: moveDataExpr2Stack( char data){
 *******************************************************************************/
 void ExpressionGraph :: moveDataStack2Expr( char data){
 
-	char* dataStr;
+	char dataStr[5];
 	
 	//This will hide the character in the source array with a bar, since each character is a 7X7 pixels
 	setfillstyle( 0, getmaxcolor());

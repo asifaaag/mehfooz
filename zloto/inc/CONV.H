@@ -31,16 +31,16 @@ class Expression : public Stack, public ExpressionGraph{
 
 class Infix : public virtual Expression{
 	protected:
-		char infix[N+1], 
-	
+		char infix[20];
+
 	public:
 		void displayInfix();
 };
 
 class Postfix : public virtual Expression{
 	protected:
-		char postfix[N+1];
-		
+		char postfix[20];
+
 	public:
 		void displayPostfix();
 };
