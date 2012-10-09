@@ -10,6 +10,7 @@
 
 // Left parentheses precedence. Minimum of all
 #define LPP 0
+#define RPP 0
 
 // Addition Subtraction precedence. Minimum among all operator precedence
 #define AP 1
@@ -45,11 +46,26 @@ class Postfix : public virtual Expression{
 		void displayPostfix();
 };
 
+class Prefix : public virtual Expression{
+	protected:
+		char prefix[20];
+
+	public:
+		void displayPrefix();
+};
+
 class InfixPostfix : public Infix, public Postfix{
 	
 	public:
 		void infix2postfix();
 		void postfix2infix();
 
+};
+
+class InfixPrefix : public Infix, public Prefix{
+
+	public:
+		void infix2prefix();
+		void postfix2infix();
 };
 #endif 

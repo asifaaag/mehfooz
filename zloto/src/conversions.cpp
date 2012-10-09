@@ -24,6 +24,8 @@ int Expression :: getPrec(char sym)
 {
     switch(sym)
     {
+	case ')':
+		return(RPP);
     case '(':
         return(LPP);
     case '+':
@@ -182,8 +184,90 @@ void InfixPostfix :: infix2postfix(void)
 		moveDataStack2Expr( ele);
 	}
     postfix[p]='\0';
+	delay( 1000);
+	cleardevice();
+	displayResult( "Infix", infix, "Postfix", postfix);
 }
 
+
+void InfixPrefix :: infix2prefix(void)
+{
+	int i, p, len, op, prec;
+	char next = 0, ele = 0;
+	i=p=0;
+	cleardevice();
+	strcpy( infix, getExpr( "Infix"));
+	strcpy( infix, strrev( infix));
+ 	initStackGraph();
+	initXY();
+	len = strlen( infix);
+	initArray( "Infix", SRC, len);
+	displayExprArray( infix);
+	initArray( "Prefix", DST, len);
+ 	while( i<len)
+    {
+        delay( 500);
+		moveCursor();
+		op = getType( infix[i]);
+		
+		switch( op)
+ 		{
+			case RP:
+				moveDataExpr2Stack( infix[i]);
+				delay( 500);
+				pushGraph( infix[i]);
+				push( infix[i]);
+				break;
+			case LP:
+				moveDataExpr2Stack( infix[i]);
+				delay( 500);
+				while((next=pop())!=')'){
+					popGraph( next);
+					delay( 500);
+					moveDataStack2Expr( next);
+					prefix[p++]=next;
+				}
+				popGraph( next);
+				delay( 500);
+				ignorePar();
+				break;
+	 		case OPERAND:
+				moveDataExpr2Expr( infix[i]);
+				delay( 500);
+				prefix[p++]=infix[i];
+				break;
+			case OPERATOR:
+				moveDataExpr2Stack( infix[i]);
+				delay( 500);
+				prec = getPrec( infix[i]);
+				while( !isEmpty() && prec < getPrec( getStackEle())){
+					checkPrec();
+					ele = pop();
+					prefix[p++] = ele;
+					popGraph( ele);
+					delay( 500);
+					moveDataStack2Expr( ele);
+				}
+				push( infix[i]);
+				pushGraph( infix[i]);
+				break;
+        }
+	    i++;
+	}
+    while( !isEmpty()){
+        ele = pop();
+		prefix[p++]=ele;
+		popGraph( ele);
+		delay( 500);
+		moveDataStack2Expr( ele);
+	}
+    prefix[p]='\0';
+	delay( 1000);
+	cleardevice();
+	strcpy( infix, strrev( infix));
+	strcpy( prefix, strrev( prefix));
+	displayResult( "Infix", infix, "prefix", prefix);
+}
 /*
 void main()
 {

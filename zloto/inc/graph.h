@@ -32,6 +32,7 @@ class UtilGraph{
 
 class MoveGraph{
 	public:
+		void displayTextXY( int X, int Y, int color, char* text);
 		void moveDataX2X( int Xsrc, int Xdest, int Y, char* data);
 		void moveDataY2Y( int X, int Ysrc, int Ydest, char* data);
 };
@@ -76,6 +77,7 @@ class ExpressionGraph : public StackGraph{
 		void moveDataExpr2Expr( char data);
 		void moveDataExpr2Stack( char data);
 		void moveDataStack2Expr( char data);
+		void displayResult( char* srctype, char* srcstr, char* desttype, char* deststr);
 };
 
 #endif

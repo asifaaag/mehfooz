@@ -427,6 +427,28 @@ void ExpressionGraph :: displayType( char* strtype){
 	}
 }
 
+void ExpressionGraph :: displayResult( char* srctype, char* srcstr, char* desttype, char* deststr){
+	char resultstr[50];
+	UtilGraph ug;
+	ug.boundary();
+	setcolor( YELLOW);
+	outtextxy( XMID-150, YMID-100, "===============RESULTS===============");
+	setcolor( 11);
+	sprintf( resultstr, "Entered %s Expression:", srctype);
+	outtextxy( XMID-120, YMID-70, resultstr);
+	setcolor( WHITE);
+	outtextxy( XMID-120, YMID-50, srcstr);
+
+	setcolor( 11);
+	sprintf( resultstr, "Result %s Expression:", desttype);
+	outtextxy( XMID-120, YMID+50, resultstr);
+	setcolor( WHITE);
+	outtextxy( XMID-120, YMID+70, deststr);
+	setcolor( YELLOW);
+	outtextxy( XMID-150, YMID+100, "===============*******===============");
+}
+
+
 /********************************************************************************
 ** function:		moveDataExpr2Expr()
 ** developer:		Asif, asifiqbal.rs@gmail.com
