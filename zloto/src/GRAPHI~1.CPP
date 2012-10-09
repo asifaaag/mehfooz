@@ -164,6 +164,7 @@ void StackGraph :: pushGraph( char data){
 	
 	Ystack -= 40;
 	
+	displayTextXY( Xstack+80, Ystack, YELLOW, "PUSH..!!");
 	//This will hide the character in the inbox with a bar, since each character is a 7X7 pixels
 	setfillstyle( 0, getmaxcolor());
 	bar( Xin, Yin, Xin+7, Yin+7);
@@ -186,6 +187,8 @@ void StackGraph :: popGraph( char data){
 	
 	char dataStr[5];
 	
+	displayTextXY( Xstack+80, Ystack, YELLOW, "POP..!!");
+
 	//This will hide the character in the inbox with a bar, since each character is a 7X7 pixels
 	setfillstyle( 0, getmaxcolor());
 	bar( Xstack, Ystack, Xstack+7, Ystack+7);
@@ -200,22 +203,45 @@ void StackGraph :: popGraph( char data){
 	Ystack += 40;
 }
 
+void StackGraph :: ignorePar(){
+	
+	displayTextXY( Xout, Yout-30, RED, "IGNORE..!!");
+	setfillstyle( 0, getmaxcolor());
+	bar( Xout, Yout, Xout+7, Yout+7);
+	bar( Xin, Yin, Xin+7, Yin+7);
+	
+}
+
 void StackGraph :: checkPrec(){
 		
-	setfillstyle( 0, getmaxcolor());
-	setcolor( RED);
-	outtextxy( Xin, Ystack, "?");
-	setlinestyle( DASHED_LINE, 0, 1);
-	setcolor( WHITE);
-	line( Xstack+50, Ystack, Xstack+100, Ystack);
-	line( Xin, Yin-30, Xin, Ystack-10);
-	//displayType( "Precedence");
+	displayTextXY( Xstack+70, Ystack, YELLOW, "PRECEDENCE..??");
 }
 
 /**========================================================================================**
  ** Member functions of class MoveGraph are defined here **
  **=======================================================================================**/
-
+/********************************************************************************
+ ** function:		displayTextXY()
+ ** developer:		Asif, asifiqbal.rs@gmail.com
+ ** description: 	to display blinking text at any given x-y location
+ ** notes:			
+ *******************************************************************************/
+ void MoveGraph :: displayTextXY( int X, int Y, int color, char* text){
+	
+	char textstr[50];
+	settextstyle( 0, HORIZ_DIR, 1);
+	setcolor( color);
+	sprintf( textstr, "%s", text);
+	for( int i=0; i<2; i++){
+		outtextxy( X, Y, textstr);
+		delay( 800);
+		setfillstyle( 0, getmaxcolor());
+		bar( X, Y, X+textwidth( textstr) ,Y+7);
+		delay( 600);
+	}
+	
+ }
+ 
  /********************************************************************************
  ** function:		moveDataX2X()
  ** developer:		Asif, asifiqbal.rs@gmail.com
@@ -224,7 +250,7 @@ void StackGraph :: checkPrec(){
  ** notes:			
  *******************************************************************************/
  void MoveGraph :: moveDataX2X( int Xsrc, int Xdest, int Y, char* data){
-	//outtextxy(Xdest,Y,"!");
+	
 	moveto( Xsrc, Y);
 	while( getx()!=Xdest){
 		setfillstyle( 0, getmaxcolor());
@@ -299,7 +325,7 @@ char* ExpressionGraph :: getExpr(char* type){
 	outtextxy(x, y, expr);
 	cin.clear();
 	gotoxy( 42, 4);
-	cin.getline( input, '\n');
+	cin.getline( input, 14);
 	return input;
 }
 
@@ -388,11 +414,10 @@ void ExpressionGraph :: moveCursor(){
 ** notes:			blinks thrice
 *******************************************************************************/
 void ExpressionGraph :: displayType( char* strtype){
-	char typestr[20];
+	char typestr[25];
 	settextstyle( 0, HORIZ_DIR, 1);
 	setcolor( YELLOW);
 	sprintf( typestr, "%s...!!", strtype);
-	//sprintf( typestr, "%s", "khudad");
 	for( int i=0; i<3; i++){
 		outtextxy( XMID, YMID-70, typestr);
 		delay( 800);
@@ -400,8 +425,6 @@ void ExpressionGraph :: displayType( char* strtype){
 		bar( XMID, YMID-70, XMID+300 ,YMID-63);
 		delay( 600);
 	}
-	//strtype = NULL;
-	//typestr = NULL;
 }
 
 /********************************************************************************

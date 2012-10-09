@@ -55,6 +55,7 @@ class StackGraph : public MoveGraph{
 		void pushGraph( char data);
 		void popGraph( char data);
 		void checkPrec();
+		void ignorePar();
 };
 
 class ExpressionGraph : public StackGraph{

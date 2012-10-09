@@ -114,7 +114,7 @@ void Postfix :: displayPostfix(){
 void InfixPostfix :: infix2postfix(void)
 {
 	int i, p, len, op, prec;
-	char next, ele = 0;
+	char next = 0, ele = 0;
 	i=p=0;
 	cleardevice();
 	strcpy( infix, getExpr( "Infix"));
@@ -141,8 +141,15 @@ void InfixPostfix :: infix2postfix(void)
 			case RP:
 				moveDataExpr2Stack( infix[i]);
 				delay( 500);
-				while((next=pop())!='(')
-				postfix[p++]=next;
+				while((next=pop())!='('){
+					popGraph( next);
+					delay( 500);
+					moveDataStack2Expr( next);
+					postfix[p++]=next;
+				}
+				popGraph( next);
+				delay( 500);
+				ignorePar();
 				break;
 	 		case OPERAND:
 				moveDataExpr2Expr( infix[i]);
@@ -154,7 +161,7 @@ void InfixPostfix :: infix2postfix(void)
 				delay( 500);
 				prec = getPrec( infix[i]);
 				while( !isEmpty() && prec <= getPrec( getStackEle())){
-					//checkPrec();
+					checkPrec();
 					ele = pop();
 					postfix[p++] = ele;
 					popGraph( ele);
