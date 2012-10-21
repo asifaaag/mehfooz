@@ -343,7 +343,7 @@ void StackGraph :: checkPrec(){
 		setcolor( WHITE);
 		circle( Xsrc+4, Y+3, 10);
 		outtext( data);
-		delay(10);
+		delay(4);
 		setfillstyle( 0, getmaxcolor());
 		bar( getx()-15, Y-7, getx()+7, Y+13);
 		moveto( Xsrc, Y);
@@ -367,7 +367,7 @@ void MoveGraph :: moveDataY2Y( int X, int Ysrc, int Ydest, char* data){
 		circle( X+4, Ysrc+3, 10);
 		///itoa(arr[count],string,10);
 		outtext( data);
-		delay(10);
+		delay(4);
 		setfillstyle( 0, getmaxcolor());
 		//setfillstyle( 1, BLUE);
 		bar( X-6, gety()-8, X+14, gety()+14);
