@@ -22,7 +22,7 @@ class UtilGraph{
 	
 	public:
 		void displayStart();
-		void boundary();
+		void boundary( int XL, int YL, int XR, int YR, int color);
 		void displayTitle();
 		char displayMenu();
 		void displayTips();

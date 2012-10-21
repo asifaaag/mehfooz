@@ -63,12 +63,36 @@ void UtilGraph :: boundary( int XL, int YL, int XR, int YR, int color){
 
 /********************************************************************************
  ** function:		displayTitle()
- ** developer:		
+ ** developer:
  ** description: 	to display Project Title and author names
- ** notes:			
+ ** notes:
  *******************************************************************************/
 void UtilGraph :: displayTitle(){
-	
+	cleardevice();
+	int x = XMID-XMID/2, y = YMID-YMID/2, xoff, yoff;
+	setbkcolor( WHITE);
+	setcolor( GREEN);
+	settextstyle( 1, HORIZ_DIR, 2);
+	outtextxy( x, y, "     Graphical illustration");
+	delay( 1000);
+	y+=30;
+	setcolor( 12);
+	outtextxy( x, y, "        of conversion");
+	delay( 1000);
+	y+=30;
+	setcolor( 3);
+	outtextxy( x, y, "           between");
+	delay( 1500);
+	y+=50;
+	setcolor( BLUE);
+	settextstyle(4, HORIZ_DIR, 4);
+	outtextxy( x-20, y, "Infix, Prefix and Postfix");
+	delay( 1000);
+
+	settextstyle( 3, HORIZ_DIR, 1);
+	setcolor( GREEN);
+	outtextxy( x+20, getmaxy()-30, "**blah blah and blah blah**");
+	delay( 2000);
 }
 
 /********************************************************************************

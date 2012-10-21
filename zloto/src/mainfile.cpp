@@ -14,12 +14,13 @@ void main(){
 	char ch, debugstr[20];
 	ConfGraph cg;
 	UtilGraph ug;
-	ExpressionGraph eg;
 	InfixPostfix in2post;
 	InfixPrefix in2pre;
+	
 	cg.initGraph();
 	cleardevice();
-	
+	ug.displayTitle();
+	settextstyle( 0, HORIZ_DIR, 1);
 	do{
 		ch = ug.displayMenu();
 		delay( 1000);
