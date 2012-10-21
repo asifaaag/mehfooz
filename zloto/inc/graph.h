@@ -28,6 +28,7 @@ class UtilGraph{
 		void displayTips();
 		void displayTransition( int color);
 		void displayEnd();	
+		void displayLayout();
 };
 
 class MoveGraph{

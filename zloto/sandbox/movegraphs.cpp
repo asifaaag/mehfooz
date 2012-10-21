@@ -290,8 +290,10 @@ void ConfGraph :: closeGraph(){
 
 void main(){
 	//int x = 40, y = 40;
+	char ch, debugstr[20];
 	ConfGraph cg;
-	//ExpressionGraph eg;
+	UtilGraph ug;
+	ExpressionGraph eg;
 	//MoveGraph mg;
 	InfixPostfix in2post;
 	InfixPrefix in2pre;
@@ -301,9 +303,13 @@ void main(){
 	//in2post.initXY();
 	//eg.boundary();
 	setbkcolor(BLUE);
+	eg.displayResult( "Infix", "a+b-c*d", "Prefix", "-*abc");
+	//sprintf( debugstr, "%c", ch);
+	//outtextxy( 10, 20, debugstr);
+	//ug.displayLayout();
 	//in2post.infix2postfix();
 	//delay( 1000);
-	in2pre.infix2prefix();
+	//in2pre.infix2prefix();
 	//for(int i=0; i<20; i++){
 	//	setcolor( i);
 	//	outtextxy( x, y, "Test");

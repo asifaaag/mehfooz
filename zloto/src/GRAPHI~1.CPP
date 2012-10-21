@@ -55,10 +55,10 @@ void ConfGraph :: closeGraph(){
  ** description: 	draws a boundry (rectangle) at the edge of the screen 
  ** notes:			
  *******************************************************************************/
-void UtilGraph :: boundary(){
+void UtilGraph :: boundary( int XL, int YL, int XR, int YR, int color){
 	setfillstyle( 0, getmaxcolor());
-	setcolor(YELLOW);
-	rectangle( 6, 6, getmaxx()-6, getmaxy()-6);
+	setcolor( color);
+	rectangle( XL, YL, XR, YR);
 }
 
 /********************************************************************************
@@ -79,23 +79,34 @@ void UtilGraph :: displayTitle(){
  *******************************************************************************/
 char UtilGraph :: displayMenu(){
 	cleardevice();
-	setbkcolor(0);
-	setcolor(2);
-
-	//This do while; loop will execute untill character 'x' is not Entered
-	outtextxy(30,5,"*==============*Menu*=============*");
-	outtextxy(30,6,"Infix to Postfix				[1]");
-	outtextxy(30,7,"Infix to Prefix     			[2]");
-	outtextxy(30,8,"Exit							[x]");
-	outtextxy(30,9,"*==============**==**=============*");
-	//gotoxy(25,9);
-	//cout<<"\t\t\t\t";
-	outtextxy(30,10,"Enter Option      				[ ]");
-	ch = tolower(( char) itoa(getche(), str, 10));
-	//sprintf( str, "%c", ch);
-	outtextxy( 63, 10, str);
-	//gotoxy(30,15);
+	int xl = XMID-XMID/2, xr = XMID+XMID/2, yl = YMID-YMID/2, yr = YMID+YMID/2, x, y;
+	displayLayout();
+	setcolor( WHITE);
+	x = xl+40;
+	y = yl+20;
+	outtextxy( x, y, "              Menu              ");
+	y += 50;
+	outtextxy( x, y, "Infix to Postfix             [1]");
+	y += 20;
+	outtextxy( x, y, "Infix to Prefix              [2]");
+	y += 20;
+	outtextxy( x, y, "Exit                         [x]");
+	y += 50;
+	outtextxy( x, y, "Enter Your Choice            [ ]");
+	ch = getch();
+	sprintf( str, "%c", ch);
+	outtextxy( x+240, y, str);
 	return ch;
+}
+
+void UtilGraph :: displayLayout(){
+	int xl = XMID-XMID/2, xr = XMID+XMID/2, yl = YMID-YMID/2, yr = YMID+YMID/2;
+	setbkcolor( 11);
+	//boundary( 6, 6, getmaxx()-6, getmaxy()-6, GREEN);
+	setfillstyle( 1, RED);
+	bar( xl, yl, xr, yr);
+	boundary( xl+6, yl+6, xr-6, yr-6, WHITE);
+
 }
 
 /**========================================================================================**
@@ -430,22 +441,36 @@ void ExpressionGraph :: displayType( char* strtype){
 void ExpressionGraph :: displayResult( char* srctype, char* srcstr, char* desttype, char* deststr){
 	char resultstr[50];
 	UtilGraph ug;
-	ug.boundary();
-	setcolor( YELLOW);
-	outtextxy( XMID-150, YMID-100, "===============RESULTS===============");
-	setcolor( 11);
-	sprintf( resultstr, "Entered %s Expression:", srctype);
-	outtextxy( XMID-120, YMID-70, resultstr);
+	cleardevice();
+	int xl = XMID-XMID/2, xr = XMID+XMID/2, yl = YMID-YMID/2, yr = YMID+YMID/2, x, y;
+	ug.displayLayout();
 	setcolor( WHITE);
-	outtextxy( XMID-120, YMID-50, srcstr);
 
-	setcolor( 11);
-	sprintf( resultstr, "Result %s Expression:", desttype);
-	outtextxy( XMID-120, YMID+50, resultstr);
-	setcolor( WHITE);
-	outtextxy( XMID-120, YMID+70, deststr);
+	x = xl+50;
+	y = yl+20;
+	setcolor( GREEN);
+	outtextxy( x, y, "          RESULTS            ");
+	y += 50;
+
 	setcolor( YELLOW);
-	outtextxy( XMID-150, YMID+100, "===============*******===============");
+	sprintf( resultstr, "Entered %s Expression:", srctype);
+	outtextxy( x, y, resultstr);
+	y += 10;
+
+	setcolor( WHITE);
+	outtextxy( x, y, srcstr);
+	y += 60;
+
+	setcolor( YELLOW);
+	sprintf( resultstr, "Result %s Expression:", desttype);
+	outtextxy( x, y, resultstr);
+	y += 10;
+
+	setcolor( WHITE);
+	outtextxy( x, y, deststr);
+	y += 30;
+
+//	outtextxy( x, y, "Press any key to continue...!!");
 }
 
 
