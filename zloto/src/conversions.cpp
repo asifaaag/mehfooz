@@ -119,6 +119,7 @@ void InfixPostfix :: infix2postfix(void)
 	char next = 0, ele = 0;
 	i=p=0;
 	cleardevice();
+	setbkcolor( BLUE);
 	strcpy( infix, getExpr( "Infix"));
  	initStackGraph();
 	initXY();
@@ -189,13 +190,19 @@ void InfixPostfix :: infix2postfix(void)
 	displayResult( "Infix", infix, "Postfix", postfix);
 }
 
-
+/********************************************************************************
+** function:   		inifix2prefix()
+** developer:		Asif, asifiqbal.rs@gmail.com
+** description: 	function for conversion from infix to prefix expression
+** notes:			takes care of graphical illustration of the same
+*******************************************************************************/
 void InfixPrefix :: infix2prefix(void)
 {
 	int i, p, len, op, prec;
 	char next = 0, ele = 0;
 	i=p=0;
 	cleardevice();
+	setbkcolor( BLUE);
 	strcpy( infix, getExpr( "Infix"));
 	strcpy( infix, strrev( infix));
  	initStackGraph();
@@ -267,6 +274,7 @@ void InfixPrefix :: infix2prefix(void)
 	strcpy( infix, strrev( infix));
 	strcpy( prefix, strrev( prefix));
 	displayResult( "Infix", infix, "prefix", prefix);
+	delay( 1000);
 }
 /*
 void main()

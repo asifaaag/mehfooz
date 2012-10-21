@@ -68,7 +68,7 @@ void UtilGraph :: boundary( int XL, int YL, int XR, int YR, int color){
  ** notes:			
  *******************************************************************************/
 void UtilGraph :: displayTitle(){
-//Waiting for Mota's Input
+	
 }
 
 /********************************************************************************
@@ -79,19 +79,22 @@ void UtilGraph :: displayTitle(){
  *******************************************************************************/
 char UtilGraph :: displayMenu(){
 	cleardevice();
-	int xl = XMID-XMID/2, xr = XMID+XMID/2, yl = YMID-YMID/2, yr = YMID+YMID/2, x, y;
+	int xl = XMID-XMID/2, yl = YMID-YMID/2, x, y;
 	displayLayout();
 	setcolor( WHITE);
 	x = xl+40;
 	y = yl+20;
+	setcolor( GREEN);
 	outtextxy( x, y, "              Menu              ");
 	y += 50;
+	setcolor( WHITE);
 	outtextxy( x, y, "Infix to Postfix             [1]");
 	y += 20;
 	outtextxy( x, y, "Infix to Prefix              [2]");
 	y += 20;
 	outtextxy( x, y, "Exit                         [x]");
 	y += 50;
+	setcolor( YELLOW);
 	outtextxy( x, y, "Enter Your Choice            [ ]");
 	ch = getch();
 	sprintf( str, "%c", ch);
@@ -99,6 +102,12 @@ char UtilGraph :: displayMenu(){
 	return ch;
 }
 
+/********************************************************************************
+ ** function:		displayLayout()
+ ** developer:		Asif, asifiqbal.rs@gmail.com
+ ** description: 	to display Layout
+ ** notes:			
+ *******************************************************************************/
 void UtilGraph :: displayLayout(){
 	int xl = XMID-XMID/2, xr = XMID+XMID/2, yl = YMID-YMID/2, yr = YMID+YMID/2;
 	setbkcolor( 11);
@@ -107,6 +116,36 @@ void UtilGraph :: displayLayout(){
 	bar( xl, yl, xr, yr);
 	boundary( xl+6, yl+6, xr-6, yr-6, WHITE);
 
+}
+
+/********************************************************************************
+ ** function:		displayEnd()
+ ** developer:		Asif, asifiqbal.rs@gmail.com
+ ** description: 	to display the End screen
+ ** notes:			
+ *******************************************************************************/
+void UtilGraph :: displayEnd(){
+	cleardevice();
+	setbkcolor( BLACK);
+	int xl = XMID-XMID/2, x = xl-10, y = getmaxy()+10;
+	char outstr[100];
+	setcolor( WHITE);
+	do{
+		outtextxy( x, y,    "       Special Thanks To Our Guide");
+		outtextxy( x, y+5,  "      _____________________________");
+		outtextxy( x, y+15, "             Mrs. Blah Blah");
+		outtextxy( x, y+80, "        Designed and Developed by");
+		outtextxy( x, y+85, "      _____________________________");
+		outtextxy( x, y+95, "              K Menghnani");
+		outtextxy( x, y+110,"               Blah Blah");
+		delay( 30);
+		setfillstyle( 0, getmaxcolor());
+		bar( x, y, x+600, y+120);
+		y--;
+	}while( y > -130);
+	
+	outtextxy( xl+20, YMID-10, "Thats ALL in this VERSION...!!!");
+	delay( 500);
 }
 
 /**========================================================================================**
@@ -164,9 +203,9 @@ void StackGraph :: initStackGraph(){
 }
 
 /********************************************************************************
- ** function:		initStackGraph()
+ ** function:		pushGraph()
  ** developer:		Asif, asifiqbal.rs@gmail.com
- ** description: 	to initialize the stack on the console along with the in and outbox
+ ** description: 	to illustrate push operation
  ** notes:			
  *******************************************************************************/
 void StackGraph :: pushGraph( char data){
@@ -189,9 +228,9 @@ void StackGraph :: pushGraph( char data){
 }
 
 /********************************************************************************
- ** function:		initStackGraph()
+ ** function:		popGraph()
  ** developer:		Asif, asifiqbal.rs@gmail.com
- ** description: 	to initialize the stack on the console along with the in and outbox
+ ** description: 	to illustrate pop operation
  ** notes:			
  *******************************************************************************/
 void StackGraph :: popGraph( char data){
@@ -214,6 +253,12 @@ void StackGraph :: popGraph( char data){
 	Ystack += 40;
 }
 
+/********************************************************************************
+ ** function:		popGraph()
+ ** developer:		Asif, asifiqbal.rs@gmail.com
+ ** description: 	to blink text IGNORE
+ ** notes:			
+ *******************************************************************************/
 void StackGraph :: ignorePar(){
 	
 	displayTextXY( Xout, Yout-30, RED, "IGNORE..!!");
@@ -223,6 +268,12 @@ void StackGraph :: ignorePar(){
 	
 }
 
+/********************************************************************************
+ ** function:		checkPrec()
+ ** developer:		Asif, asifiqbal.rs@gmail.com
+ ** description: 	to blink text PRECEDENCE
+ ** notes:			
+ *******************************************************************************/
 void StackGraph :: checkPrec(){
 		
 	displayTextXY( Xstack+70, Ystack, YELLOW, "PRECEDENCE..??");
@@ -429,7 +480,7 @@ void ExpressionGraph :: displayType( char* strtype){
 	settextstyle( 0, HORIZ_DIR, 1);
 	setcolor( YELLOW);
 	sprintf( typestr, "%s...!!", strtype);
-	for( int i=0; i<3; i++){
+	for( int i=0; i<2; i++){
 		outtextxy( XMID, YMID-70, typestr);
 		delay( 800);
 		setfillstyle( 0, getmaxcolor());
@@ -438,11 +489,17 @@ void ExpressionGraph :: displayType( char* strtype){
 	}
 }
 
+/********************************************************************************
+** function:		displayResult()
+** developer:		Asif, asifiqbal.rs@gmail.com
+** description: 	to display the Result
+** notes:			
+*******************************************************************************/
 void ExpressionGraph :: displayResult( char* srctype, char* srcstr, char* desttype, char* deststr){
 	char resultstr[50];
 	UtilGraph ug;
 	cleardevice();
-	int xl = XMID-XMID/2, xr = XMID+XMID/2, yl = YMID-YMID/2, yr = YMID+YMID/2, x, y;
+	int xl = XMID-XMID/2, yl = YMID-YMID/2, x, y;
 	ug.displayLayout();
 	setcolor( WHITE);
 
@@ -469,8 +526,8 @@ void ExpressionGraph :: displayResult( char* srctype, char* srcstr, char* destty
 	setcolor( WHITE);
 	outtextxy( x, y, deststr);
 	y += 30;
-
-//	outtextxy( x, y, "Press any key to continue...!!");
+	
+	getch();
 }
 
 
