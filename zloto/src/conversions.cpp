@@ -202,7 +202,7 @@ void InfixPrefix :: infix2prefix(void)
 	char next = 0, ele = 0;
 	i=p=0;
 	cleardevice();
-	setbkcolor( BLUE);
+	setbkcolor( GREEN);
 	strcpy( infix, getExpr( "Infix"));
 	strcpy( infix, strrev( infix));
  	initStackGraph();

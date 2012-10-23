@@ -123,6 +123,7 @@ char UtilGraph :: displayMenu(){
 	ch = getch();
 	sprintf( str, "%c", ch);
 	outtextxy( x+240, y, str);
+	getch();
 	return ch;
 }
 
@@ -152,7 +153,7 @@ void UtilGraph :: displayEnd(){
 	cleardevice();
 	setbkcolor( BLACK);
 	int xl = XMID-XMID/2, x = xl-10, y = getmaxy()+10;
-	char outstr[100];
+	
 	setcolor( WHITE);
 	do{
 		outtextxy( x, y,    "       Special Thanks To Our Guide");
